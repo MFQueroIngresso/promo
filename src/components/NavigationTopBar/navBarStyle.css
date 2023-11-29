@@ -1,0 +1,16 @@
+.navbar {
+    background-color: #fff;
+    position: fixed;
+    height: 12vh;
+    width: 100%;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img {
+    margin-right: 1vw;
+    height: 12vh;
+}

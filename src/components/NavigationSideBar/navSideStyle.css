@@ -1,0 +1,30 @@
+.offcanvas {
+    margin-top: 12vh;
+    width: 20vw !important;
+    background-color: var(--blue) !important;
+    position: fixed;
+}
+
+.offcanvas-title {
+    color: white;
+    font-size: 2vh;
+    font-weight: bold;
+}
+
+.offcanvas-body ul {
+    list-style: none;
+}
+
+.offcanvas-body li {
+    margin-bottom: 3vh;
+}
+
+.offcanvas-body a {
+    text-decoration: none;
+    color: white;
+    font-size: 2vh;
+}
+
+.offcanvas-title {
+    margin-bottom: 3vh !important;
+}

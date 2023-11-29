@@ -1,0 +1,97 @@
+html,
+body {
+  overflow: hidden;
+  height: 100%;
+  background-color: var(--body-background);
+  margin: 0;
+  padding: 0;
+}
+
+/* .corpo {
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr;
+    grid-template-rows: 12vh auto;
+    min-height: 100vh;
+}
+
+.menu-superior {
+    grid-column: 1 / span 3;
+    grid-row: 1 / 2;
+    background-color: gray;
+}
+
+.menu-lateral {
+    grid-column: 1 / 2;
+    grid-row: 2 / span 2;
+    background-color: lightgray;
+}
+
+.conteudo {
+    grid-column: 2 / span 3;
+    grid-row: 2 / span 2;
+    background-color: var(--body-background);
+    overflow-y: auto;
+    max-height: calc(100vh - 12vh);
+}
+
+.informacoes {
+    width: 100%;
+    height: 30vh;
+    background-color: var(--body-background);
+    border-top: 2px solid var(--grey-shadow);
+    border-bottom: 2px solid var(--grey-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.evento {
+    flex-basis: 50%;
+}
+
+.botoes {
+    display: flex;
+    gap: 10px;
+}
+
+.evento-header {
+    color: var(--blue);
+    font-weight: bold;
+    margin-bottom: 2vh;
+}
+
+.evento-nome {
+    font-weight: bold;
+}
+
+.evento-detalhe {
+    color: var(--grey);
+}
+
+.cards-group {
+    flex-basis: calc(25% - 10px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+.card {
+    margin: 10px;
+    margin-top: 10px;
+}
+
+.card-footer {
+    background-color: var(--grey-shadow) !important;
+}
+
+.card-header {
+    background-color: lightblue !important;
+    font-weight: bold;
+} */

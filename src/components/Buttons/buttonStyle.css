@@ -1,0 +1,35 @@
+.button {
+    text-decoration: none;
+    border-radius: 3px;
+    color: white;
+    border: none;
+}
+
+.button-cube {
+    padding: 7px 10px;
+    margin: 5px;
+    min-width: 2vw;
+    min-height: 2vw;
+}
+
+.button-cube img {
+    width: 2vw;
+    height: 2vw;
+}
+
+.button-blue {
+    background-color: var(--blue);
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.align-center {
+    align-items: center;
+}
+
+[class*='flex'],
+[class*='-flex'] {
+    display: flex;
+}

@@ -1,0 +1,265 @@
+.pagination-container {
+  text-align: right;
+}
+
+.pagination-button {
+  background-color: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin: 3px;
+  cursor: pointer;
+}
+
+.pagination-numbers button {
+  background-color: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin: 3px;
+  cursor: pointer;
+}
+
+.pagination-numbers button.active {
+  background-color: var(--light-blue);
+  color: var(--blue);
+  font-weight: bold;
+}
+
+.pagination-button:hover {
+  background-color: #024893;
+}
+
+.pagination-button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.dropdown {
+  border: 1px solid rgb(223, 223, 223);
+  border-radius: 5px;
+  padding: 10px;
+  height: auto;
+  width: auto;
+  min-width: 300px;
+  overflow: hidden;
+  transition: 0.2s all;
+  box-shadow: none;
+}
+
+.table {
+  height: auto;
+  width: 100%;
+}
+
+.table-responsive .title,
+.table-responsive .sub-title {
+  padding: 5px;
+  border-right: 1px solid #ddd;
+}
+
+.table-responsive .nome,
+.table-responsive .local,
+.table-responsive .data,
+.table-responsive .dias,
+.table-responsive .vendidos,
+.table-responsive .receita,
+.table-responsive .cortesias,
+.table-responsive .taxa {
+  padding: 5px;
+}
+
+.table-responsive .data,
+.table-responsive .vendidos,
+.table-responsive .receita,
+.table-responsive .cortesias,
+.table-responsive .taxa {
+  border-right: 1px solid #ddd
+}
+
+.table-responsive .data{
+  border-left: 1px solid #ddd
+}
+
+.table-responsive .taxa {
+  border-right: none;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  border: 1px solid #ddd;
+}
+
+
+.table-responsive .title {
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  color: var(--blue);
+  padding: 5px;
+}
+
+.table-responsive .sub-title {
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  padding: 5px;
+}
+
+.table-responsive .nome {
+  color: var(--blue);
+  font-weight: bold;
+  vertical-align: middle;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.table-responsive .local {
+  color: gray;
+  vertical-align: middle;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.table-responsive .data {
+  color: gray;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.table-responsive .dias {
+  color: var(--blue);
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.table-responsive .vendidos {
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.table-responsive .receita {
+  color: rgb(2, 161, 2);
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.table-responsive .cortesias {
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.table-responsive .taxa {
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.mobile-table {
+  display: none;
+}
+
+@media all and (max-width: 600px) {
+  .table-responsive {
+    display: none;
+  }
+
+  .mobile-table {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .mobile-table th,
+  .mobile-table td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: center;
+  }
+
+  .mobile-table tbody td {
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .mobile-table tbody tr {
+    margin-bottom: 10px;
+  }
+
+  .mobile-table .event-odd {
+    background-color: #ffffff;
+  }
+
+  .mobile-table .event-even {
+    background-color: #f2f2f2;
+  }
+
+  .title {
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    color: var(--blue);
+  }
+
+  .sub-title {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .nome {
+    color: var(--blue);
+    font-weight: bold;
+    vertical-align: middle;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .local {
+    color: gray;
+    vertical-align: middle;
+    text-transform: capitalize;
+    text-align: center;
+  }
+
+  .data {
+    color: gray;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .dias {
+    color: var(--blue);
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .vendidos {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .receita {
+    color: rgb(2, 161, 2);
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .cortesias {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .taxa {
+    text-align: center;
+    vertical-align: middle;
+  }
+}

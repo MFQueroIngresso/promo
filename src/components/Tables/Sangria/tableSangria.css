@@ -1,0 +1,65 @@
+.sangria-tabela {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .sangria-cabecalho {
+    border-bottom: 1px solid var(--grey-shadow);
+    border-top: 1px solid var(--grey-shadow);
+    padding: 10px;
+    text-align: left;
+    color: black
+  }
+
+  .sangria-rodape {
+    border-bottom: 1px solid var(--grey-shadow);
+    border-top: 1px solid var(--grey-shadow);
+    padding: 10px;
+    text-align: left;
+    font-weight: bold;
+  }
+  
+  .sangria-celula {
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: left;
+    padding: 10px;
+  }
+
+  .sangria-celula-botao {
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .sangria-botao-expandir {
+    width: 30px;
+    height: 30px;
+    background-color: var(--blue);
+    color: white;
+    font-size: 18px;
+    margin-right: 20px;
+    border: none
+  }
+  
+  .sangria-conteudo-expandido {
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: left;
+    padding: 10px;
+  }
+  
+  .sangria-linha-branca {
+    background-color: #ffffff;
+  }
+  
+  .sangria-linha-cinza {
+    background-color: #f2f2f2;
+  }
+
+  .sangria-linha-azul {
+    background-color: lightblue;
+    font-weight: bold;
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: left;
+    padding: 10px;
+  }
+  

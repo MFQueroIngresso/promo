@@ -1,0 +1,107 @@
+.numerados-tabela {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .numerados-cabecalho {
+    border-bottom: 1px solid var(--grey-shadow);
+    border-top: 1px solid var(--grey-shadow);
+    padding: 15px;
+    text-align: center;
+  }
+
+  .numerados-rodape {
+    border-bottom: 1px solid var(--grey-shadow);
+    border-top: 1px solid var(--grey-shadow);
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .numerados-celula {
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: center;
+  }
+
+  .numerados-celula-left {
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: left;
+    padding-left: 15px;
+  }
+  
+  .numerados-botao-expandir {
+    width: 30px;
+    height: 30px;
+    background-color: var(--blue);
+    color: white;
+    font-size: 18px;
+    margin-right: 20px;
+    margin-left: 10px;
+    border: none
+  }
+  
+  
+  .numerados-conteudo-expandido {
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: center;
+  }
+
+  .numerados-conteudo-expandido-left {
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: left;
+    padding-left: 15px;
+  }
+
+  .numerados-botao-expandir2 {
+    width: 30px;
+    height: 30px;
+    background-color: lightblue;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    margin-right: 20px;
+    margin-left: 10px;
+    border: none
+  }
+  
+  .numerados-conteudo-expandido2 {
+    border-bottom: 1px solid var(--blue-shadow);
+    text-align: center;
+  }
+  
+  .numerados-linha-branca {
+    background-color: #ffffff;
+  }
+  
+  .numerados-linha-cinza {
+    background-color: #f2f2f2;
+  }
+
+  .numerados-linha-azul {
+    background-color: lightblue;
+    font-weight: bold;
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: center;
+  }
+
+  .numerados-linha-azul-left {
+    background-color: lightblue;
+    font-weight: bold;
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: left;
+    padding-left: 15px;
+  }
+  
+
+.disponivel-cell {
+  background-color: rgb(71, 175, 71);
+  color: white;
+}
+
+.parcial-cell {
+  background-color: rgb(231, 231, 158);
+}
+
+.vendido-cell {
+  background-color: rgb(215, 70, 70);
+  color: white;
+}
