@@ -60,21 +60,28 @@ const TableClassesDiario = () => {
 
   // Funções de ordenação
   function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
+    const valueA = typeof a[orderBy] === 'number' ? a[orderBy] : a[orderBy] && Date.parse(a[orderBy]);
+    const valueB = typeof b[orderBy] === 'number' ? b[orderBy] : b[orderBy] && Date.parse(b[orderBy]);
+  
+    if (!isNaN(valueA) && !isNaN(valueB)) {
+      return valueB - valueA;
+    }
+  
+    if (valueB < valueA) {
       return -1;
     }
-    if (b[orderBy] > a[orderBy]) {
+    if (valueB > valueA) {
       return 1;
     }
     return 0;
   }
-
+  
   function getComparator(order, orderBy) {
     return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
-
+  
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
@@ -89,7 +96,7 @@ const TableClassesDiario = () => {
 
   const EnhancedTableHead = (props) => {
     const { order, orderBy, onRequestSort } = props;
-
+  
     const createSortHandler = (property) => (event) => {
       onRequestSort(event, property);
     };
@@ -98,40 +105,40 @@ const TableClassesDiario = () => {
 
     return (
       <thead>
-        <tr>
-          <th className="diario-cabecalho"></th>
-          <SortableTableCell
-            label={<b>Data</b>}
-            numeric={false}
-            order={orderBy === 'data' ? order : false}
-            onRequestSort={createSortHandler('data')}
-          />
-          <SortableTableCell
-            label={<b>Prazo p/ evento</b>}
-            numeric={true}
-            order={orderBy === 'prazo' ? order : false}
-            onRequestSort={createSortHandler('prazo')}
-          />
-          <SortableTableCell
-            label={<b>Vendidos</b>}
-            numeric={true}
-            order={orderBy === 'vendidos' ? order : false}
-            onRequestSort={createSortHandler('vendidos')}
-          />
-          <SortableTableCell
-            label={<b>Cortesias</b>}
-            numeric={true}
-            order={orderBy === 'cortesias' ? order : false}
-            onRequestSort={createSortHandler('cortesias')}
-          />
-          <SortableTableCell
-            label={<b>Valor</b>}
-            numeric={false}
-            order={orderBy === 'valor' ? order : false}
-            onRequestSort={createSortHandler('valor')}
-          />
-        </tr>
-      </thead>
+      <tr>
+        <th className="diario-cabecalho"></th>
+        <SortableTableCell
+          label={<b>Data</b>}
+          numeric={false}
+          order={orderBy === 'data' ? order : false}
+          onRequestSort={createSortHandler('data')}
+        />
+        <SortableTableCell
+          label={<b>Prazo p/ evento</b>}
+          numeric={true}
+          order={orderBy === 'prazo' ? order : false}
+          onRequestSort={createSortHandler('prazo')}
+        />
+        <SortableTableCell
+          label={<b>Vendidos</b>}
+          numeric={true}
+          order={orderBy === 'vendidos' ? order : false}
+          onRequestSort={createSortHandler('vendidos')}
+        />
+        <SortableTableCell
+          label={<b>Cortesias</b>}
+          numeric={true}
+          order={orderBy === 'cortesias' ? order : false}
+          onRequestSort={createSortHandler('cortesias')}
+        />
+        <SortableTableCell
+          label={<b>Valor</b>}
+          numeric={false}
+          order={orderBy === 'valor' ? order : false}
+          onRequestSort={createSortHandler('valor')}
+        />
+      </tr>
+    </thead>
     );
   };
 
