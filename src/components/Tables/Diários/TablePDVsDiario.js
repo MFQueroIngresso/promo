@@ -13,7 +13,7 @@ const TablePDVsDiario = () => {
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
   const [currentPage, setCurrentPage] = useState(1);
   const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
-  const [order, setOrder] = useState('asc');
+  const [order, setOrder] = useState('desc');
   const [orderBy, setOrderBy] = useState('data');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -65,28 +65,68 @@ const TablePDVsDiario = () => {
 
   // Funções de ordenação
   function descendingComparator(a, b, orderBy) {
-    const valueA = typeof a[orderBy] === 'number' ? a[orderBy] : a[orderBy] && Date.parse(a[orderBy]);
-    const valueB = typeof b[orderBy] === 'number' ? b[orderBy] : b[orderBy] && Date.parse(b[orderBy]);
-  
-    if (!isNaN(valueA) && !isNaN(valueB)) {
-      return valueB - valueA;
+    if (orderBy === 'data') {
+      // Ordenação de datas
+      const dateA = parseDateString(a[orderBy]);
+      const dateB = parseDateString(b[orderBy]);
+
+      if (dateB < dateA) {
+        return -1;
+      }
+      if (dateB > dateA) {
+        return 1;
+      }
+      return 0;
+    } else if (orderBy === 'prazo') {
+      // Ordenação do prazo
+      const prazoA = parsePrazoString(a[orderBy]);
+      const prazoB = parsePrazoString(b[orderBy]);
+
+      if (prazoB < prazoA) {
+        return -1;
+      }
+      if (prazoB > prazoA) {
+        return 1;
+      }
+      return 0;
+    } else {
+      // Outras ordenações
+      if (b[orderBy] < a[orderBy]) {
+        return -1;
+      }
+      if (b[orderBy] > a[orderBy]) {
+        return 1;
+      }
+      return 0;
     }
-  
-    if (valueB < valueA) {
-      return -1;
-    }
-    if (valueB > valueA) {
-      return 1;
-    }
-    return 0;
   }
-  
+
+  function parseDateString(dateString) {
+    // Extrai a parte da data da string
+    const datePart = dateString.split(' ')[0];
+
+    // Divide os componentes da data
+    const [day, month, year] = datePart.split('/');
+
+    // Cria um objeto Date
+    return new Date(`${year}-${month}-${day}`);
+  }
+
+  function parsePrazoString(prazoString) {
+    // Usa uma expressão regular para extrair o número da string
+    const match = prazoString.match(/\d+/);
+
+    // Se encontrou um número, retorna como um número, senão, retorna 0
+    return match ? parseInt(match[0], 10) : 0;
+  }
+
+
   function getComparator(order, orderBy) {
     return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
-  
+
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
@@ -101,7 +141,7 @@ const TablePDVsDiario = () => {
 
   const EnhancedTableHead = (props) => {
     const { order, orderBy, onRequestSort } = props;
-  
+
     const createSortHandler = (property) => (event) => {
       onRequestSort(event, property);
     };
@@ -110,46 +150,46 @@ const TablePDVsDiario = () => {
 
     return (
       <thead>
-      <tr>
-        <th className="diario-cabecalho"></th>
-        <SortableTableCell
-          label={<b>Data</b>}
-          numeric={false}
-          order={orderBy === 'data' ? order : false}
-          onRequestSort={createSortHandler('data')}
-        />
-        <SortableTableCell
-          label={<b>Prazo p/ evento</b>}
-          numeric={true}
-          order={orderBy === 'prazo' ? order : false}
-          onRequestSort={createSortHandler('prazo')}
-        />
-        <SortableTableCell
-          label={<b>Vendidos</b>}
-          numeric={true}
-          order={orderBy === 'vendidos' ? order : false}
-          onRequestSort={createSortHandler('vendidos')}
-        />
-        <SortableTableCell
-          label={<b>Cortesias</b>}
-          numeric={true}
-          order={orderBy === 'cortesias' ? order : false}
-          onRequestSort={createSortHandler('cortesias')}
-        />
-        <SortableTableCell
-          label={<b>Valor</b>}
-          numeric={false}
-          order={orderBy === 'valor' ? order : false}
-          onRequestSort={createSortHandler('valor')}
-        />
-      </tr>
-    </thead>
+        <tr>
+          <th className="diario-cabecalho"></th>
+          <SortableTableCell
+            label={<b>Data</b>}
+            numeric={false}
+            order={orderBy === 'data' ? order : false}
+            onRequestSort={createSortHandler('data')}
+          />
+          <SortableTableCell
+            label={<b>Prazo p/ evento</b>}
+            numeric={true}
+            order={orderBy === 'prazo' ? order : false}
+            onRequestSort={createSortHandler('prazo')}
+          />
+          <SortableTableCell
+            label={<b>Vendidos</b>}
+            numeric={true}
+            order={orderBy === 'vendidos' ? order : false}
+            onRequestSort={createSortHandler('vendidos')}
+          />
+          <SortableTableCell
+            label={<b>Cortesias</b>}
+            numeric={true}
+            order={orderBy === 'cortesias' ? order : false}
+            onRequestSort={createSortHandler('cortesias')}
+          />
+          <SortableTableCell
+            label={<b>Valor</b>}
+            numeric={false}
+            order={orderBy === 'valor' ? order : false}
+            onRequestSort={createSortHandler('valor')}
+          />
+        </tr>
+      </thead>
     );
   };
 
   const SortableTableCell = (props) => {
     const { label, numeric, order, onRequestSort } = props;
-  
+
     return (
       <TableCell className="diario-cabecalho" align={numeric ? 'center' : 'left'}>
         <TableSortLabel
@@ -167,6 +207,14 @@ const TablePDVsDiario = () => {
       </TableCell>
     );
   };
+
+  function formatDate(dateString) {
+    const [date, dayOfWeek] = dateString.split(' - ');
+    const [day, month, year] = date.split('/');
+
+    // Você pode ajustar a formatação conforme necessário
+    return `${day}/${month}/${year} - ${dayOfWeek}`;
+  }
 
   const expandirLinha = (data) => {
     setLinhaSelecionada(data === linhaSelecionada ? -1 : data);
@@ -205,7 +253,7 @@ const TablePDVsDiario = () => {
                             {item.data === linhaSelecionada ? '-' : '+'}
                           </button>
                         </td>
-                        <td className="diario-celula-left">{item.data}</td>
+                        <td className="diario-celula-left">{formatDate(item.data)}</td>
                         <td className="diario-celula">{item.prazo}</td>
                         <td className="diario-celula">{item.vendidos}</td>
                         <td className="diario-celula">{item.cortesias}</td>
