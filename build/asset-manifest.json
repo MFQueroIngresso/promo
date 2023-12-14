@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.916ad523.css",
+    "main.js": "/static/js/main.d3ac5ab1.js",
+    "static/media/quero_ingresso_logo.png": "/static/media/quero_ingresso_logo.fdf87d17c8a974ab8ff7.png",
+    "index.html": "/index.html",
+    "main.916ad523.css.map": "/static/css/main.916ad523.css.map",
+    "main.d3ac5ab1.js.map": "/static/js/main.d3ac5ab1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.916ad523.css",
+    "static/js/main.d3ac5ab1.js"
+  ]
+}
