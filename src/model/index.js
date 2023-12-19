@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default function Connection() {
-    const url = 'http://promo.mfhosting.com.br/';
+    const url = 'http://172.31.41.220:3000';
 	//const url = 'http://localhost:3000/';
 
     const conn = axios.create({
