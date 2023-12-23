@@ -4,10 +4,8 @@ import { CircularProgress, Grid, TableContainer } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
-import TablePagination from '@mui/material/TablePagination';
 import Connection from '../../../model';
 import SearchBar from '../../Outros/SearchBar';
-import DownloadButton from '../../Buttons/DownloadButton';
 import Pagination from '@mui/material/Pagination';
 
 // Funções de ordenação
@@ -245,9 +243,6 @@ const TableNumerados = () => {
           <Grid container sx={{ py: 2 }}>
             <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginBottom: '5px' }}>
               <SearchBar label="Buscar Numerado" onSearch={(query) => handleSearch(query)} />
-            </Grid>
-            <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '5px' }}>
-              <DownloadButton />
             </Grid>
           </Grid>
           <TableContainer>

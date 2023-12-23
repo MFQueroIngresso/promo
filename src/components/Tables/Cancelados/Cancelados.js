@@ -7,13 +7,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import TablePagination from '@mui/material/TablePagination';
 import { Container, Divider, Grid } from '@mui/material';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Connection from '../../../model';
 import { format } from 'date-fns';
 import SearchBar from '../../Outros/SearchBar';
-import DownloadButton from '../../Buttons/DownloadButton';
 import Pagination from '@mui/material/Pagination';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -94,7 +92,7 @@ export default function TableCancelados() {
             {
               cat: selectedEventCode.categoria, //passa a categoria do evento
               filtros: {
-                status: 'Cancelado',
+                status: 'Cancelado pela operadora',
                 ingresso: ''
               },
               busca: searchQuery
@@ -164,9 +162,6 @@ export default function TableCancelados() {
       <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
         <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
           <SearchBar label="Buscar por RG ou Pedido" onSearch={handleSearch} />
-        </Grid>
-        <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-          <DownloadButton />
         </Grid>
       </Grid>
       <Grid item xs={12}>

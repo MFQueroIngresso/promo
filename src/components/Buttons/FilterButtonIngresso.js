@@ -13,7 +13,7 @@ export default function FilterButtonIngresso({ ingressoOptions, selectedIngresso
   };
 
   return (
-    <Box sx={{ minWidth: 120, maxWidth: 120, marginRight: '7px' }}>
+    <Box sx={{ minWidth: 250, maxWidth: 250, marginRight: '7px' }}>
       <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Ingresso</InputLabel>
         <Select

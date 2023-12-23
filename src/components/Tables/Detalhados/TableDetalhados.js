@@ -7,10 +7,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import TablePagination from '@mui/material/TablePagination';
 import Connection from '../../../model';
 import { CircularProgress, Container, Divider, Grid } from '@mui/material';
-import DownloadButton from '../../Buttons/DownloadButton';
 import FilterButtonTipo from '../../Buttons/FilterButtonTipo';
 import FilterButtonSituacao from '../../Buttons/FilterButtonSituacao';
 import FilterButtonPos from '../../Buttons/FilterButtonPos';
@@ -18,14 +16,14 @@ import FilterButtonPdv from '../../Buttons/FilterButtonPdv';
 import SearchBar from '../../Outros/SearchBar';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { format } from 'date-fns';
-import Pagination from '@mui/material/Pagination';
 import ExportExcelDetalhados from '../../Buttons/ExportExcelDetalhados';
 
 export default function TableDetalhados() {
   const [orderBy, setOrderBy] = useState('data_compra');
   const [order, setOrder] = useState('desc');
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [data, setData] = useState();
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [dataLoadedFiltros, setDataLoadedFiltros] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [detalhes, setDetalhes] = useState([]); //estado para salvar os dados retornados pelo endpoint
@@ -35,12 +33,6 @@ export default function TableDetalhados() {
   const [situacaoFilter, setSituacaoFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonSituacao
   const [tipoFilter, setTipoFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonTipo
   const [searchQuery, setSearchQuery] = useState(''); // Busca
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const handleChangePagination = (event, value) => {
-    setCurrentPage(value);
-    setPage(value - 1);
-  };
 
   //recupera e salva os dados do localStorage para preencher dados salvos no login
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
@@ -117,43 +109,49 @@ export default function TableDetalhados() {
     'Cód. da Transação',
   ];
 
+  const conn = Connection(); //conecta com o servidor backend
+
+  const fetchDetalhes = async (page) => {
+    try {
+      const response = await conn.post(
+        `eventos/detalhados`, //faz a requisição na rota especificada
+        {
+          evento: selectedEventCode.eve_cod, //passa o id do evento
+          filtros: {
+            pdv: pdvFilter,
+            pos: posFilter,
+            situacao: situacaoFilter,
+            tipo: tipoFilter
+          },
+          busca: searchQuery,
+          linhas: 10,
+          pagina: page
+        },
+        {
+          headers: {
+            'token': localStorage.getItem('token')
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        setDetalhes(response.data.data);
+        setData(response.data)
+        setTotalPages(response.data.total)
+        setDataLoaded(true);
+      } else {
+        console.log('Erro na resposta da API:', response);
+      }
+    } catch (error) {
+      console.error('Erro na solicitação GET:', error);
+    }
+  };
+
   //requisição dos dados detalhados
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {
-      const conn = Connection(); //conecta com o servidor backend
 
-      const fetchDetalhes = async () => {
-        try {
-          const response = await conn.post(
-            'eventos/detalhados', //faz a requisição na rota especificada
-            {
-              evento: selectedEventCode.eve_cod, //passa o id do evento
-              filtros: {
-                pdv: pdvFilter,
-                pos: posFilter,
-                situacao: situacaoFilter,
-                tipo: tipoFilter
-              },
-              busca: searchQuery
-            },
-            {
-              headers: {
-                'token': localStorage.getItem('token')
-              }
-            }
-          );
-
-          if (response.status === 200) {
-            setDetalhes(response.data.data);
-            setDataLoaded(true);
-          } else {
-            console.log('Erro na resposta da API:', response);
-          }
-        } catch (error) {
-          console.error('Erro na solicitação GET:', error);
-        }
-      };
-      fetchDetalhes();
+      fetchDetalhes(page);
     }
   }, [selectedEventCode, dataLoaded, pdvFilter, posFilter, situacaoFilter, tipoFilter]);
 
@@ -192,8 +190,57 @@ export default function TableDetalhados() {
   const handleSearch = (query) => {
     const searchQuery = query.trim() === '' ? '' : query;
     setSearchQuery(searchQuery);
-    setPage(0);
+    setPage(1);
     setDataLoaded(false);
+  };
+
+  const handleIncrement = () => {
+    const newPage = page + 1
+    setPage(newPage)
+    fetchDetalhes(newPage)
+  }
+
+  const handleDecrement = () => {
+    const newPage = page - 1
+    if (newPage >= 1) {
+      setPage(newPage);
+      fetchDetalhes(newPage);
+    }
+  }
+
+  const handleGoToPage = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setPage(pageNumber);
+      fetchDetalhes(pageNumber);
+    }
+  };
+
+  const renderPageNumbers = () => {
+    const currentPage = page;
+    let startPage = 1;
+    const maxPages = Math.min(currentPage + 2, totalPages);
+
+    if (currentPage > totalPages - 2) {
+      startPage = totalPages - 2;
+    } else {
+      startPage = currentPage;
+    }
+
+    const pageNumbers = [];
+    for (let i = startPage; i <= maxPages; i++) {
+      if (i >= 1) {
+        pageNumbers.push(
+          <button
+            key={i}
+            onClick={() => handleGoToPage(i)}
+            className={`pagination-number ${page === i ? 'active' : ''}`}
+          >
+            {i}
+          </button>
+        );
+      }
+    }
+    return pageNumbers;
   };
 
   const handlePdvFilterChange = (value) => {
@@ -216,10 +263,8 @@ export default function TableDetalhados() {
     setDataLoaded(false);
   };
 
-  //console.log(detalhes)
-  console.log(situacaoFilter)
-
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, detalhes.length - page * rowsPerPage);
+  console.log(detalhes)
+  //console.log(situacaoFilter)
 
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
@@ -243,7 +288,7 @@ export default function TableDetalhados() {
                 <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
                   <SearchBar label="Buscar PDV ou POS" onSearch={handleSearch} />
                 </Grid>
-                <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flexWrap: 'wrap' }}>
+                <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
                   <FilterButtonPdv
                     pdvOptions={filtros.pdv.map((filtro) => ({
                       value: filtro,
@@ -276,7 +321,6 @@ export default function TableDetalhados() {
                     selectedTipo={tipoFilter}
                     onTipoFilterChange={handleTipoFilterChange}
                   />
-                  <DownloadButton />
                 </Grid>
                 <Grid item xs={12}>
                   <Divider sx={{ my: 1, mx: -2, backgroundColor: 'var(--grey-shadow)' }} />
@@ -389,13 +433,10 @@ export default function TableDetalhados() {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {(rowsPerPage > 0
-                          ? stableSort(detalhes, (a, b) => {
-                            const isAsc = order === 'asc';
-                            return isAsc ? (a[orderBy] > b[orderBy] ? 1 : -1) : (b[orderBy] > a[orderBy] ? 1 : -1);
-                          }).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                          : detalhes
-                        ).map((row, index) => (
+                        {stableSort(detalhes, (a, b) => {
+                          const isAsc = order === 'asc';
+                          return isAsc ? (a[orderBy] > b[orderBy] ? 1 : -1) : b[orderBy] > a[orderBy] ? 1 : -1;
+                        }).map((row, index) => (
                           <StyledTableBodyRow key={row.tipo} index={index}>
                             <TableCell component="th" scope="row" align='center'></TableCell>
                             <TableCell component="th" scope="row" align='center'>
@@ -413,25 +454,41 @@ export default function TableDetalhados() {
                             <TableCell align='center'>{row.cod_pagseguro}</TableCell>
                           </StyledTableBodyRow>
                         ))}
-                        {emptyRows > 0 && (
-                          <TableRow style={{ height: 53 * emptyRows }}>
-                            <TableCell colSpan={6} />
-                          </TableRow>
-                        )}
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  <Pagination
-                    count={Math.ceil(detalhes.length / rowsPerPage)} // Calcula o número total de páginas
-                    page={currentPage}
-                    onChange={handleChangePagination}
-                    showFirstButton
-                    showLastButton
-                    style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}
-                  />
+                  {data && data.total && (
+                    <div className="pagination-container">
+                      <button onClick={handleDecrement} className="pagination-button" disabled={page === 1}>
+                        {"<"}
+                      </button>
+                      <button
+                        onClick={() => handleGoToPage(1)}
+                        className="pagination-button"
+                        style={{ display: page === 1 ? 'none' : 'inline-block' }}
+                      >
+                        {"1"}
+                      </button>
+                      <span style={{ display: (page === 1 || page === 2) ? 'none' : 'inline-block', marginLeft: '5px' }}>
+                        ...
+                      </span>
+                      <span className="pagination-numbers">
+                        {renderPageNumbers()}
+                      </span>
+                      <span style={{ display: (page === totalPages) ? 'none' : 'inline-block', marginRight: '5px', marginLeft: '5px' }}>
+                        ...
+                      </span>
+                      <button onClick={() => handleGoToPage(totalPages)} className="pagination-button" style={{ display: (page === totalPages) ? 'none' : 'inline-block' }}>
+                        {totalPages}
+                      </button>
+                      <button onClick={handleIncrement} className="pagination-button" disabled={page === data.total}>
+                        {">"}
+                      </button>
+                    </div>
+                  )}
                 </Grid>
                 <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}>
-                  <ExportExcelDetalhados data={detalhes} columnHeaders={columnHeaders}/>
+                  <ExportExcelDetalhados data={detalhes} columnHeaders={columnHeaders} />
                 </Grid>
               </Grid>
             </div>

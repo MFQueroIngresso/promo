@@ -4,8 +4,6 @@ import { CircularProgress, TableContainer } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
-import TablePagination from '@mui/material/TablePagination';
-import DownloadButton from '../../Buttons/DownloadButton';
 import SearchBar from '../../Outros/SearchBar';
 import Grid from '@mui/material/Grid';
 import Connection from '../../../model';
@@ -201,9 +199,6 @@ const TablePDV = () => {
       <Grid container sx={{ py: 2 }}>
         <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginBottom: '5px' }}>
           <SearchBar label="Buscar PDV" onSearch={(query) => handleSearch(query)} />
-        </Grid>
-        <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '5px' }}>
-          <DownloadButton />
         </Grid>
       </Grid>
       {dataLoaded ? (

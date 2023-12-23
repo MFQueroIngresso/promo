@@ -13,7 +13,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItems, tertiaryListItems } from '../../components/NavigationSideBar/SideBar';
 import Title from '../../components/Outros/Title';
-import DownloadButton from '../../components/Buttons/DownloadButton';
 import EventoAtual from '../../components/Outros/EventoAtual';
 import EventIcon from '@mui/icons-material/Event';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -301,10 +300,6 @@ export default function Home() {
                         dataEvento={selectedEventCode.eve_data}
                         localEvento={selectedEventCode.local}
                         cidadeEvento={selectedEventCode.cidade} />
-                    </Grid>
-                    {/* Botões */}
-                    <Grid item xs={12} md={4} lg={3} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
-                      <DownloadButton />
                     </Grid>
                     {/* Divider */}
                     <Grid item xs={12}>
